@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
 namespace TestingConsole
 {
@@ -10,7 +11,14 @@ namespace TestingConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello world");
+            var logger = LogManager.GetLogger("default");
+            var logEventInfo = new LogEventInfo(LogLevel.Info, logger.Name, "this is a test");
+            logEventInfo.Properties["Person"] = new { Name = "Peter", Age = 34 };
+            logEventInfo.Properties["Pet"] = new { NickName = "whiskers", Kind = "Cat", Color = "Black" };
+
+            logger.Log(logEventInfo);
+
+            Console.WriteLine("Information logged");
         }
     }
 }
